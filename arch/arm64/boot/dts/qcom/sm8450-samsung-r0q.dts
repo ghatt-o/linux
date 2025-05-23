@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: GPL-2.0-only
 
-#include "sm8450-samsung-r0q.dtsi"
+/dts-v1/;
+
+#include "sm8450.dtsi"
 
 / {
+    chassis-type = "handset";
     model = "Samsung Galaxy S22";
     compatible = "samsung,r0q", "qcom,sm8450";
 
@@ -42,4 +45,8 @@
 			phandle = <0x274>;
 		};
 	};
+};
+
+&uart7 {
+    status = "okay";
 };
