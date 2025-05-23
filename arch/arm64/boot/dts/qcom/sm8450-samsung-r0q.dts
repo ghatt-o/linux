@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+#include "sm8450-samsung-r0q.dtsi"
+
+/ {
+    model = "Samsung Galaxy S22";
+    compatible = "samsung,r0q", "qcom,sm8450";
+
+    chosen {
+        stdout-path = &uart7;
+        bootargs = "earlycon=msm_geni_uart,99c000 console=ttyMSM7,115200n8 loglevel=15";
+        #address-cells = <2>;
+        #size-cells = <1>;
+    
+        framebuffer: framebuffer@b8000000 {
+            compatible = "simple-framebuffer";
+            reg = <0 0xb8000000 0 0x2b00000>;
+            width = <1080>;
+            height = <2340>;
+            stride = <4320>;
+            format = "a8r8g8b8";
+        };
+    };
+
+	reserved-memory {
+		#address-cells = <0x02>;
+		#size-cells = <0x02>;
+		ranges;
+		phandle = <0x261>;
+
+		framebuffer_region@b8000000 {
+			reg = <0x0 0xb8000000 0x0 0x2b00000>;
+			no-map;
+		};
+
+		ramoops {
+			compatible = "ramoops";
+			alloc-ranges = <0x00 0x00 0xffffffff 0xffffffff>;
+			size = <0x00 0x200000>;
+			pmsg-size = <0x200000>;
+			mem-type = <0x02>;
+			phandle = <0x274>;
+		};
+	};
+};
