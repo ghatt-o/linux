@@ -13,7 +13,7 @@
         stdout-path = &uart7;
         bootargs = "earlycon=msm_geni_uart,99c000 console=ttyMSM7,115200n8 loglevel=15";
         #address-cells = <2>;
-        #size-cells = <1>;
+        #size-cells = <2>;
     
         framebuffer: framebuffer@b8000000 {
             compatible = "simple-framebuffer";
