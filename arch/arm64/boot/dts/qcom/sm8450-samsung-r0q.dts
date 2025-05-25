@@ -2,7 +2,10 @@
 
 /dts-v1/;
 
+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+#include <dt-bindings/gpio/gpio.h>
 #include "sm8450.dtsi"
+#include "pm8450.dtsi"
 
 / {
     chassis-type = "handset";
@@ -11,42 +14,43 @@
 
     chosen {
         stdout-path = &uart7;
-        bootargs = "earlycon=msm_geni_uart,99c000 console=ttyMSM7,115200n8 loglevel=15";
+        bootargs = "earlycon=msm_geni_uart,99c000 console=tty0 loglevel=10 init=init";
         #address-cells = <2>;
         #size-cells = <2>;
+        ranges;
     
         framebuffer: framebuffer@b8000000 {
             compatible = "simple-framebuffer";
-            reg = <0 0xb8000000 0 0x2b00000>;
+            reg = <0x0 0xb8000000 0x0 0x2b00000>;
             width = <1080>;
             height = <2340>;
-            stride = <4320>;
+            stride = <(1080 * 4)>;
             format = "a8r8g8b8";
+            status = "okay";
+
+            clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
         };
     };
 
-	reserved-memory {
-		#address-cells = <0x02>;
-		#size-cells = <0x02>;
-		ranges;
-		phandle = <0x261>;
+    gpio-keys {
+	compatible = "gpio-keys";
 
-		framebuffer_region@b8000000 {
-			reg = <0x0 0xb8000000 0x0 0x2b00000>;
-			no-map;
-		};
-
-		ramoops {
-			compatible = "ramoops";
-			alloc-ranges = <0x00 0x00 0xffffffff 0xffffffff>;
-			size = <0x00 0x200000>;
-			pmsg-size = <0x200000>;
-			mem-type = <0x02>;
-			phandle = <0x274>;
-		};
+	key-vol-up {
+		label = "Volume Up";
+		gpios = <&pm8450_gpios 6 GPIO_ACTIVE_LOW>;
+		linux,code = <115>;
 	};
-};
+    };
 
-&uart7 {
-    status = "okay";
+    reserved-memory {
+	#address-cells = <0x02>;
+	#size-cells = <0x02>;
+	ranges;
+	phandle = <0x261>;
+
+	splash_region@b8000000 {
+		reg = <0x0 0xb8000000 0x0 0x2b00000>;
+		no-map;
+	};
+    };
 };
