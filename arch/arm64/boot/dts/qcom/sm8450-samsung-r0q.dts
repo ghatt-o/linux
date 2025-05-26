@@ -52,5 +52,14 @@
 		reg = <0x0 0xb8000000 0x0 0x2b00000>;
 		no-map;
 	};
+
+	ramoops {
+		compatible = "ramoops";
+		alloc-ranges = <0x00 0x00 0xffffffff 0xffffffff>;
+		size = <0x00 0x200000>;
+		pmsg-size = <0x200000>;
+		mem-type = <0x02>;
+		phandle = <0x274>;
+	};
     };
 };
