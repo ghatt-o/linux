@@ -14,7 +14,7 @@
 
     chosen {
         stdout-path = &uart7;
-        bootargs = "earlycon=msm_geni_uart,99c000 console=tty0 loglevel=10 init=init";
+        bootargs = "earlycon=msm_geni_uart,99c000 console=tty0 loglevel=10";
         #address-cells = <2>;
         #size-cells = <2>;
         ranges;
